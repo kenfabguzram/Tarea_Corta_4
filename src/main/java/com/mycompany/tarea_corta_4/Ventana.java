@@ -58,70 +58,45 @@ public class Ventana implements ActionListener{
         boton3.addActionListener(this);
     }
 //--------------------------------------------------------------------------------------------------------------
+//Clase para validar la cantidad de clicks y mandar un mensaje en caso de que los botones no se presionen en el
+//orden correcto
+    public void validarClicks(int clicksValidos){
+        try{
+            if (clicks!=clicksValidos){
+                throw new IOException();
+            }
+            else{
+                clicks=(clicks+1)%3;
+            }
+        }
+        catch(IOException ex){
+            clicks=0;
+            JDialog dialogo=new JDialog(ventana,"Orden incorrecto");
+            dialogo.setSize(new Dimension(430,100));
+            dialogo.setLocation(500,200);
+            dialogo.add(new JLabel("Los botones no fueron presionados en el orden correcto, debe reintentar"), BorderLayout.CENTER);
+            dialogo.setVisible(true);
+
+        }
+    }
+//--------------------------------------------------------------------------------------------------------------
 //actionPerformed
     @Override
     public void actionPerformed(ActionEvent e){
     //--------------------------------------------------------------------------------------------------------------
     //ActionPerformed para el boton1
         if(e.getSource().equals(boton1)){
-            try{
-                if (clicks!=0){
-                    throw new IOException();
-                }
-                else{
-                    clicks++;
-                }
-            }
-            catch(IOException ex){
-                clicks=0;
-                JDialog dialogo=new JDialog(ventana,"Orden incorrecto");
-                dialogo.setSize(new Dimension(430,100));
-                dialogo.setLocation(500,200);
-                dialogo.add(new JLabel("Los botones no fueron presionados en el orden correcto, debe reintentar"), BorderLayout.CENTER);
-                dialogo.setVisible(true);
-
-            }
+            validarClicks(0);
         }
     //--------------------------------------------------------------------------------------------------------------
     //ActionPerformed para el boton2
         if(e.getSource().equals(boton2)){
-            try{
-                if (clicks!=1){
-                    throw new IOException();
-                }
-                else{
-                    clicks++;
-                }
-            }
-            catch(IOException ex){
-                clicks=0;
-                JDialog dialogo=new JDialog(ventana,"Orden incorrecto");
-                dialogo.setSize(new Dimension(430,100));
-                dialogo.setLocation(500,200);
-                dialogo.add(new JLabel("Los botones no fueron presionados en el orden correcto, debe reintentar"));
-                dialogo.setVisible(true);
-                
-            }
+            validarClicks(1);
         }
     //--------------------------------------------------------------------------------------------------------------
     //ActionPerformed para el boton3
         if(e.getSource().equals(boton3)){
-            try{
-                if (clicks!=2){
-                    throw new IOException();
-                }
-                else{
-                    clicks=0;
-                }
-            }
-            catch(IOException ex){
-                clicks=0;
-                JDialog dialogo=new JDialog(ventana,"Orden incorrecto");
-                dialogo.setSize(new Dimension(430,100));
-                dialogo.setLocation(500,200);
-                dialogo.add(new JLabel("Los botones no fueron presionados en el orden correcto, debe reintentar"),BorderLayout.CENTER);
-                dialogo.setVisible(true);
-            }
+            validarClicks(2);
         }
     //--------------------------------------------------------------------------------------------------------------
     //fin del ActionPerformed
